@@ -1,0 +1,28 @@
+{
+  "name": "todo_backlog_front",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack -w",
+    "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.7",
+    "style-loader": "^0.19.0",
+    "ts-loader": "^4.4.1",
+    "typescript": "^2.9.2",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.6",
+    "webpack-dev-server": "^3.0.0"
+  },
+  "dependencies": {
+    "@types/react": "^16.3.17",
+    "@types/react-dom": "^16.0.6",
+    "isomorphic-fetch": "^2.2.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "private": true
+}
