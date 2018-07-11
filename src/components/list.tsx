@@ -13,6 +13,10 @@ interface IState {
     issues_id: Number;
     textTitle: string;
     textContent: string;
+    project_id: Number;
+    my_id: Number;
+    issue_type_id: Number;
+    priority_id: Number;
  }
   
   export class ToDoList extends React.Component<IProps, IState> {
@@ -22,9 +26,13 @@ interface IState {
         toDoList: props.toDoList,
         issues_id: NaN,
         textTitle: '',
-        textContent: ''
+        textContent: '',
+        project_id: NaN,
+        my_id: NaN,
+        issue_type_id: NaN,
+        priority_id: NaN,
       };
-      //this.updateTodo();
+      this.updateTodo();
       
     }
       
@@ -32,18 +40,38 @@ interface IState {
         fetch("")
           .then(response =>{
             console.log("a");
-            console.log(response.json());
             return response.json();
+          }).then(json_data =>{
+            console.table(json_data.project_info);
+            let project_info = json_data.project_info;
+            this.setState({project_id: project_info.project_id});
+            this.setState({my_id: project_info.my_id});
+            this.setState({issue_type_id: project_info.issue_type_id});
+            this.setState({priority_id: project_info.priority_id});
+
+            let list = this.state.toDoList;
+            console.log(project_info.issues[0].summary)
+            let issues = project_info.issues; 
+            for(let i in issues) {
+              console.log(issues[i].summary);
+              list.push({
+                title: issues[i].summary,
+                content: issues[i].description,
+                issues_id: issues[i].id
+              })
+              this.setState({toDoList: list});
+            }
+            console.table(this.state);
           })
       }
 
       addToDo() {
         let issues_date = {
-          project_id: 32538,
+          project_id: this.state.project_id,
           summary: this.state.textTitle,
-          assignee_id: 84381,
-          issue_type_id: 147348,
-          priority_id: 1,
+          assignee_id: this.state.my_id,
+          issue_type_id: this.state.issue_type_id,
+          priority_id: this.state.priority_id,
           description: this.state.textContent
         }
         let issues_id;
