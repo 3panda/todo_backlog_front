@@ -9,6 +9,7 @@ interface IProps {
   
 interface IState {
     toDoList: any;
+    issue_id: number;
     textTitle: string;
     textContent: string;
  }
@@ -18,6 +19,7 @@ interface IState {
       super(props);
       this.state = {
         toDoList: props.toDoList,
+        issue_id: null,
         textTitle: '',
         textContent: ''
       };
@@ -35,7 +37,19 @@ interface IState {
       }
 
       addToDo() {
-        let form = document.getElementById('form');
+        let list = this.state.toDoList;
+        list.push({ title: this.state.textTitle, content: this.state.textContent });
+        this.setState({toDoList: list});
+
+        // let form = document.getElementById('form');
+        let issue_date = {
+          project_id: 32538,
+          summary: this.state.textTitle,
+          assignee_id: 84381,
+          issue_type_id: 147348,
+          priority_id: 1,
+          description: this.state.textContent
+        }
         fetch("", {
           mode: 'cors',
           headers: {
@@ -44,17 +58,16 @@ interface IState {
           cache: 'no-cache',
           credentials: 'same-origin',
           method: 'POST',
-          body: new FormData(form as HTMLFormElement) 
+          body: JSON.stringify(issue_date) 
         })
         .then(response =>{
           console.log("b");
+          console.log(response);
           console.log(response.json());
           return response.json();
         })
 
-        let list = this.state.toDoList;
-        list.push({ title: this.state.textTitle, content: this.state.textContent });
-        this.setState({toDoList: list});
+
       }   
 
       deleteToDo(i){
@@ -89,6 +102,7 @@ interface IState {
 
         const domList = this.state.toDoList.map((m, i) =>{
             return <li key={i}>
+              issue :{m.issue_id}<br />
               タイトル：{m.title}<br/>
               内容：{m.content}<br/>
               <button onClick={e => this.deleteToDo(i)}>完了にする</button>
