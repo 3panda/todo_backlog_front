@@ -1,5 +1,6 @@
 import * as React from 'react';
 import fetch from 'isomorphic-fetch';
+import { isNull } from 'util';
 
 
 // Propsの型定義
@@ -9,7 +10,7 @@ interface IProps {
   
 interface IState {
     toDoList: any;
-    issue_id: number;
+    issues_id: Number;
     textTitle: string;
     textContent: string;
  }
@@ -19,11 +20,11 @@ interface IState {
       super(props);
       this.state = {
         toDoList: props.toDoList,
-        issue_id: null,
+        issues_id: NaN,
         textTitle: '',
         textContent: ''
       };
-      this.updateTodo();
+      //this.updateTodo();
       
     }
       
@@ -37,12 +38,7 @@ interface IState {
       }
 
       addToDo() {
-        let list = this.state.toDoList;
-        list.push({ title: this.state.textTitle, content: this.state.textContent });
-        this.setState({toDoList: list});
-
-        // let form = document.getElementById('form');
-        let issue_date = {
+        let issues_date = {
           project_id: 32538,
           summary: this.state.textTitle,
           assignee_id: 84381,
@@ -50,6 +46,8 @@ interface IState {
           priority_id: 1,
           description: this.state.textContent
         }
+        let issues_id;
+
         fetch("", {
           mode: 'cors',
           headers: {
@@ -58,20 +56,32 @@ interface IState {
           cache: 'no-cache',
           credentials: 'same-origin',
           method: 'POST',
-          body: JSON.stringify(issue_date) 
-        })
-        .then(response =>{
+          body: JSON.stringify(issues_date) 
+        }).then(response =>{
           console.log("b");
-          console.log(response);
-          console.log(response.json());
           return response.json();
-        })
+        }).then(json_data => {
+          console.log("b:" + json_data);
+          issues_id = json_data.data.issues_id;
+          this.setState({issues_id: issues_id});
 
+        let list = this.state.toDoList;
+        list.push({
+          title: this.state.textTitle,
+          content: this.state.textContent,
+          issues_id: this.state.issues_id
+          });
+        this.setState({toDoList: list});
+        console.table(this.state.toDoList);
 
+        });
       }   
 
       deleteToDo(i){
-        let num = {test: 1000} 
+        
+        let list = this.state.toDoList;
+        let issues_id = {issues_id: list[i]['issues_id']}
+        
         fetch("", {
           mode: 'cors',
           headers: {
@@ -80,20 +90,16 @@ interface IState {
           cache: 'no-cache',
           credentials: 'same-origin',
           method: 'POST',
-          body: JSON.stringify(num)
+          body: JSON.stringify(issues_id)
         })
         .then(response =>{
           console.log("c");
-          console.log(response.json());
           return response.json();
-        })
-
-
-        let list = this.state.toDoList;
-        list.splice(i, 1);
-        this.setState({toDoList: list});
-
-
+        }).then(json_data => {
+          console.table(json_data.data);
+          list.splice(i, 1);
+          this.setState({toDoList: list});
+        });
 
       }
 
@@ -102,7 +108,7 @@ interface IState {
 
         const domList = this.state.toDoList.map((m, i) =>{
             return <li key={i}>
-              issue :{m.issue_id}<br />
+              issue :{m.issues_id}<br />
               タイトル：{m.title}<br/>
               内容：{m.content}<br/>
               <button onClick={e => this.deleteToDo(i)}>完了にする</button>
