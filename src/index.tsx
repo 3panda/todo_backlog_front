@@ -1,13 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {ToDoList} from './components/list';
+import {ToDoList} from './components/todo_list';
 
-const list = [];
+
 class App extends React.Component {
+  constructor(process) {
+    super(process);
+  }
+
   render() {
     return (
         <div>
-          <ToDoList toDoList={list}/>
+          <ToDoList/>
         </div>
     );
   }
