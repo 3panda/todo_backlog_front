@@ -6,7 +6,7 @@ input,
 select,
 textarea,
 button {
-  color: #333;
+  color: #777;
   font: 14px "Helvetica Neue", Arial, Helvetica, sans-serif;
   line-height: 20px;
   font-weight: 400;
@@ -35,7 +35,11 @@ h2 {
     overflow: hidden;
     text-decoration: none;
     word-wrap: break-word;
-    color: #444;
+    color: ;
+}
+
+.issue_id {
+    font-size: 12px;
 }
 
 .contents-box {
@@ -59,4 +63,56 @@ h2 {
 
 .content:last-of-type {
     margin-bottom: 0;
+}
+.button {
+    font-size: 12px;
+    width: 70px;
+    padding: 7px;
+    border-radius: 3px;
+    text-align: center;
+    color: #fff;
+    transition: background .3s ease;
+}
+
+.button,
+.button:active {
+  background: #388E3C;
+}
+
+.button:hover,
+.button:focus {
+   background: #2E7D32;
+}
+
+.button.disabled {
+    background: #f8f9f9;
+    box-shadow: none;
+    color: #b6bbbf;
+    cursor: default;
+    font-weight: 700;
+}
+
+#form {
+    margin-bottom: 10px
+}
+
+
+input[type=text],
+textarea{
+    width: 100%;
+    margin: 2px 0 12px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    background-color: #e2e4e6;
+    border: 1px solid #cdd2d4;
+    border-radius: 3px;
+    display: block;
+    transition: background 85ms ease-in,border-color 85ms ease-in;
+}
+
+input[type=text]:focus,
+textarea:focus {
+    background: #fff;
+    border-color: #298fca;
+    box-shadow: 0 0 2px #298fca;
 }

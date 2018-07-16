@@ -39,7 +39,7 @@ export class Content extends React.Component<IProps, IState> {
 
     return (
         <div className='content'>
-          <h2>{this.state.textTitle}({this.state.issuesId})</h2>
+          <h2>{this.state.textTitle}<span className="issue_id">({this.state.issuesId})</span></h2>
           <p>{this.state.textContent}</p>
           <div className="button" onClick={e => this.deleteTodo(this.state.id)}>完了にする</div>
         </div>

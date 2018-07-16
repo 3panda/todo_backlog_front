@@ -42,22 +42,30 @@ export class Input extends React.Component<IProps, IState> {
   }
   
   render() {
+    let is_entered:boolean = false;
+    if (this.state.textTitle != '' && this.state.textContent != ''){
+      is_entered = true;
+    }
     return (
-        <div id= "form">
-            <form>
-                <input name="title" type="text" placeholder="課題のタイトル ※必須" 
-                  value={this.state.textTitle}
-                  onChange={e => this.setState({textTitle: e.target.value})}
-                  defaultValue="課題のタイトル" /><br/>
-                <textarea name="contents" placeholder="内容を入力" defaultValue="内容を入力してください"
-                  value={this.state.textContent}
-                  onChange={e => this.setState({textContent: e.target.value})}></textarea><br/>
-                {(() => {
-                  if (this.state.textTitle != '' && this.state.textContent != '')
-                    return <div onClick={() => this.addTodo()}>追加</div>;
-                })()}
-            </form>
-        </div>
+          <form id="form">
+              <input name="title" type="text" placeholder="課題のタイトル ※必須" 
+                value={this.state.textTitle}
+                onChange={e => this.setState({textTitle: e.target.value})}
+                defaultValue="課題のタイトル" />
+              <textarea name="contents" placeholder="内容を入力してください ※必須"
+                value={this.state.textContent}
+                onChange={e => this.setState({textContent: e.target.value})}></textarea>
+
+              {(() => {
+                if (is_entered){
+                  return <div className="button" onClick={() => this.addTodo()}>追加</div>; 
+                } else {
+                  return <div className="button disabled">追加</div>;
+                }
+              })()} 
+
+
+          </form>
     );
   }
 
