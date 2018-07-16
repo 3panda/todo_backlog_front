@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+html,
+body,
+input,
+select,
+textarea,
+button {
+  color: #333;
+  font: 14px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+body {
+    background-color: #0079bf;
+}
+
+#app {
+    width: 300px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+h2 {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    overflow: hidden;
+    text-decoration: none;
+    word-wrap: break-word;
+    color: #444;
+}
+
+.contents-box {
+    width: 300px;
+    padding: 10px 10px;
+    background: #e2e4e6;
+    border-radius: 3px;
+    box-sizing: border-box;
+    flex-direction: column;
+    max-height: 100%;
+    white-space: normal;
+}
+
+.content {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 #ccc;
+}
+
+.content:last-of-type {
+    margin-bottom: 0;
+}

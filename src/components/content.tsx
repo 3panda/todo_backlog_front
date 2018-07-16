@@ -38,12 +38,10 @@ export class Content extends React.Component<IProps, IState> {
   render() {
 
     return (
-        <div>
-          <h2>{this.state.textTitle}(id:{this.state.id})</h2>
-          <p>issues_id:{this.state.issuesId}</p>
-          <p>タイトル:{this.state.textTitle}</p>
-          <p>内容:{this.state.textContent}</p>
-          <div onClick={e => this.deleteTodo(this.state.id)}>完了にする</div>
+        <div className='content'>
+          <h2>{this.state.textTitle}({this.state.issuesId})</h2>
+          <p>{this.state.textContent}</p>
+          <div className="button" onClick={e => this.deleteTodo(this.state.id)}>完了にする</div>
         </div>
     );
   }

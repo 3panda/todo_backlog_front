@@ -162,7 +162,9 @@ interface IState {
           
           <div>
             <Input parentMethod ={this.addTodo.bind(this)}/>
+            <div className="contents-box">
             {todos}
+            </div>
           </div>
       );
     }
