@@ -10,9 +10,16 @@ namespace apiConst {
   export const UPDATE_BACKLOG_ISSUE = '';
 }
 
+// Todoの型定義
+interface IToDo {
+  issuesId: number;
+  textTitle: string;
+  textContent: string;
+}
+
 // Stateの型定義
 interface IState {
-  toDoList: any;
+  toDoList: IToDo[];
   issues_id: number;
   textTitle: string;
   textContent: string;
@@ -28,7 +35,7 @@ interface IState {
     constructor(process) {
       super(process);
       //　初期値用
-      const list =[];
+      const list:IToDo[] = [];
 
       this.state = {
         toDoList: list,
@@ -54,11 +61,11 @@ interface IState {
       .then(response =>{
         this.setState({is_loaded: false})
 
-        console.log("update");
-        console.log("通信中");
+        //console.log("update");
+        //console.log("通信中");
         return response.json();
       }).then(json_data =>{
-        console.log("Json取得");
+        //console.log("Json取得");
         //console.table(json_data.project_info);
         let project_info = json_data.project_info;
         this.setState({project_id: project_info.project_id});
@@ -66,10 +73,10 @@ interface IState {
         this.setState({issue_type_id: project_info.issue_type_id});
         this.setState({priority_id: project_info.priority_id});
 
-        let l = this.state.toDoList;
+        let l:IToDo[] = this.state.toDoList;
         //console.log(project_info.issues[0].summary)
         let issues = project_info.issues;
-        console.log('jsonのlistの大きさ:' + issues.length)
+        //console.log('jsonのlistの大きさ:' + issues.length)
 
         if (issues.length <= 0) {
           this.setState({is_issue_completed: true});
@@ -80,7 +87,7 @@ interface IState {
         }
 
         for(let i in issues) {
-          console.log("リストの展開");
+          //console.log("リストの展開");
           //console.log(issues[i].summary);
           l.push({
             issuesId: issues[i].id,
@@ -91,16 +98,16 @@ interface IState {
           this.setState({toDoList: l});
           this.setState({is_loaded: true})
         }
-        console.table(this.state);
+        //console.table(this.state);
       })
 
     }
 
     // ToDoをListに追加 Backlogのissuesへも追加 
     private addTodo(obj: {textTitle: string; textContents: string}) :void{
-      console.log("add");
+      //console.log("add");
       this.setState({is_loaded: false})
-      let l = this.state.toDoList;
+      let l:IToDo[] = this.state.toDoList;
       let issuesId;
       let issues_date = {
         project_id: this.state.project_id,
@@ -122,11 +129,11 @@ interface IState {
         method: 'POST',
         body: JSON.stringify(issues_date) 
       }).then(response =>{
-        console.log("b");
+        //console.log("b");
         return response.json();
       }).then(json_data => {
-        console.log("成功");
-        console.log("b:" + json_data);
+        //console.log("成功");
+        //console.log("b:" + json_data);
         issuesId = json_data.data.issues_id;
         this.setState({issues_id: issuesId});
 
@@ -138,14 +145,14 @@ interface IState {
       this.setState({toDoList: l});
       this.setState({is_loaded: true})
       this.setState({is_issue_completed: false});
-      console.table(this.state.toDoList);
+      //console.table(this.state.toDoList);
       });
 
     }
 
     // ToDoをListから削除 Backlogのissuesも削除 
     private deleteTodo(id:number) :void {
-      console.log("delete");
+      //console.log("delete");
       this.setState({is_loaded: false})
       let l = this.state.toDoList;
       //console.table(this.state.toDoList);
@@ -179,8 +186,8 @@ interface IState {
     }
 
     render() {
-      console.log("render");
-      let todos = this.state.toDoList.map((todo, i) =>{
+      //console.log("render");
+      let todos:any = this.state.toDoList.map((todo, i) =>{
         return <Content 
                 key={i} 
                 id={i} 
@@ -194,9 +201,9 @@ interface IState {
       let list_count:number = this.state.toDoList.length;
       let is_issue_completed:boolean = this.state.is_issue_completed;
       let  marquee_text:string = '現在、未解決の課題はありません'
-      console.log("is_loaded:" + is_loaded);
-      console.log("list_count:" + list_count);
-      console.log("is_issue_completed:" + is_issue_completed);
+      //console.log("is_loaded:" + is_loaded);
+      //console.log("list_count:" + list_count);
+      //console.log("is_issue_completed:" + is_issue_completed);
       return (
            
           <div>

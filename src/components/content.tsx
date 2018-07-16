@@ -1,5 +1,4 @@
 import * as React from 'react';
-import fetch from 'isomorphic-fetch';
 
 // Propsの型定義
 interface IProps {
