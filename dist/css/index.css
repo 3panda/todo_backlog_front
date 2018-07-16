@@ -45,12 +45,19 @@ h2 {
 .contents-box {
     width: 300px;
     padding: 10px 10px;
-    background: #e2e4e6;
     border-radius: 3px;
     box-sizing: border-box;
     flex-direction: column;
     max-height: 100%;
     white-space: normal;
+}
+
+.bg_gray {
+  background: #e2e4e6;
+}
+
+.bg_white {
+  background-color: #fff;
 }
 
 .content {
@@ -184,5 +191,21 @@ textarea:focus {
   }
   87.5% {
     box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2), 1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2), 2.5em 0em 0 0em rgba(255, 255, 255, 0.2), 1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2), 0em 2.5em 0 0em rgba(255, 255, 255, 0.2), -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.5), -2.6em 0em 0 0em rgba(255, 255, 255, 0.7), -1.8em -1.8em 0 0em #ffffff;
+  }
+}
+
+/* 流れるText*/
+.marquee_box{
+  overflow: hidden;
+}
+
+.target{
+  animation: flowing 8s linear infinite;
+  transform: translateX(100%);
+}
+
+@keyframes flowing {
+  100% {
+    transform: translateX(-100%);
   }
 }
