@@ -198,19 +198,17 @@ interface IState {
       });
 
       let is_loaded:boolean = this.state.is_loaded;
-      let list_count:number = this.state.toDoList.length;
       let is_issue_completed:boolean = this.state.is_issue_completed;
       let  marquee_text:string = '現在、未解決の課題はありません'
       //console.log("is_loaded:" + is_loaded);
-      //console.log("list_count:" + list_count);
       //console.log("is_issue_completed:" + is_issue_completed);
       return (
            
           <div>
             {(() => {
-                if (is_loaded && !this.state.is_issue_completed){
+                if (is_loaded && !is_issue_completed){
                   return <><Input parentMethod ={this.addTodo.bind(this)}/><div className="contents-box bg_gray">{todos}</div></>;
-                } else if (is_loaded && this.state.is_issue_completed) {
+                } else if (is_loaded && is_issue_completed) {
                   return <><Input parentMethod ={this.addTodo.bind(this)}/><div className="contents-box bg_white marquee_box"><p className="target">{marquee_text}</p></div></>;
                 } else {
                   return <div className="loader">Loading...</div>;
