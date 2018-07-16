@@ -20,6 +20,7 @@ interface IState {
   my_id: number;
   issue_type_id: number;
   priority_id: number;
+  is_loaded: boolean;
  }
   
   export class ToDoList extends React.Component<null, IState> {
@@ -37,6 +38,7 @@ interface IState {
         my_id: NaN,
         issue_type_id: NaN,
         priority_id: NaN,
+        is_loaded: false
       };
 
       this.updateTodo();
@@ -47,6 +49,8 @@ interface IState {
       // Backlogから未対応の一覧を取得
       fetch(apiConst.GET_BACKLOG_DAT)
       .then(response =>{
+        this.setState({is_loaded: false})
+
         console.log("update");
         return response.json();
       }).then(json_data =>{
@@ -69,6 +73,7 @@ interface IState {
             
           })
           this.setState({toDoList: l});
+          this.setState({is_loaded: true})
         }
         console.table(this.state);
       })
@@ -78,6 +83,7 @@ interface IState {
     // ToDoをListに追加 Backlogのissuesへも追加 
     private addTodo(obj: {textTitle: string; textContents: string}) :void{
       console.log("add");
+      this.setState({is_loaded: false})
       let l = this.state.toDoList;
       let issuesId;
       let issues_date = {
@@ -100,9 +106,11 @@ interface IState {
         method: 'POST',
         body: JSON.stringify(issues_date) 
       }).then(response =>{
-        //console.log("b");
+        console.log("b");
+        console.log("通信中");
         return response.json();
       }).then(json_data => {
+        console.log("成功");
         //console.log("b:" + json_data);
         issuesId = json_data.data.issues_id;
         this.setState({issues_id: issuesId});
@@ -113,6 +121,7 @@ interface IState {
         textContent: obj.textContents
         });
       this.setState({toDoList: l});
+      this.setState({is_loaded: true})
       //console.table(this.state.toDoList);
       });
 
@@ -121,6 +130,7 @@ interface IState {
     // ToDoをListから削除 Backlogのissuesも削除 
     private deleteTodo(id:number) :void {
       console.log("delete");
+      this.setState({is_loaded: false})
       let l = this.state.toDoList;
       //console.table(this.state.toDoList);
       //console.log(l[id]['issuesId']);
@@ -143,6 +153,7 @@ interface IState {
         //console.table(json_data.data);
         l.splice(id, 1);
         this.setState({toDoList: l});
+        this.setState({is_loaded: true})
       });
     }
 
@@ -158,14 +169,23 @@ interface IState {
                 parentMethod ={this.deleteTodo.bind(this)}/>;
       });
 
+      let is_loaded:boolean = this.state.is_loaded;
+      let list_count:number = this.state.toDoList.length;
+      console.log("list_count:" + list_count);
       return (
-          
+           
           <div>
-            <Input parentMethod ={this.addTodo.bind(this)}/>
-            <div className="contents-box">
-            {todos}
-            </div>
-          </div>
+            {(() => {
+                
+                if (this.state.is_loaded == true){
+                  <Input parentMethod ={this.addTodo.bind(this)}/>
+                  return <><Input parentMethod ={this.addTodo.bind(this)}/><div className="contents-box">{todos}</div></>;
+                } else {
+                  return <div className="loader">Loading...</div>;
+                }
+              })()}
+        
+           </div>
       );
     }
 

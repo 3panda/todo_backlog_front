@@ -9,11 +9,7 @@ class App extends React.Component {
   }
 
   render() {
-    return (
-        <div>
-          <ToDoList/>
-        </div>
-    );
+    return (<ToDoList/>);
   }
 }
 
