@@ -1,6 +1,6 @@
 # todo_backlog_front
 このリポジトリはSimple TodoListのフロントエンド処理のリポジトリです　
-バックエンド処理のリポジトリは(こちら)[https://github.com/3panda/todo_backlog_back]になります
+バックエンド処理のリポジトリは[こちら](https://github.com/3panda/todo_backlog_back) になります
 
 ## Simple TodoList
 - Simple TodoListはBacklog APIの技術検証のためのデモアプリです
